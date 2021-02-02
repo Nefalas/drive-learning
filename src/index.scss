@@ -1,0 +1,187 @@
+@import "colors.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: $dark_grey;
+}
+
+button {
+  background: $dark_grey;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+}
+
+.game {
+  display: inline-block;
+  border: 1px solid $medium_grey;
+  height: 100%;
+  background: $grey;
+
+  .game-canvas {
+    width: 600px;
+    height: 100%
+  }
+}
+
+.neuro-controls {
+  height: 100%;
+  width: 400px;
+  margin-left: 50px;
+  padding: 20px;
+  background: $grey;
+
+  & > * {
+    width: 100%;
+    background: $light_grey;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  #game-score {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+
+    &>div {
+      color: white;
+      background: $dark_grey;
+      padding: 10px;
+      font-size: 13px;
+    }
+  }
+
+  #neuro-state {
+    height: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+
+  #weight-management {
+    height: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+
+  #neuro-score {
+    max-height: 400px;
+    overflow-y: scroll;
+
+    #car-scores {
+      width: 100%;
+      text-align: left;
+      background: $dark_grey;
+      padding: 10px;
+      color: white;
+      table-layout: fixed;
+
+      tbody {
+        background: $light_grey;
+
+        td {
+          padding: 3px;
+        }
+      }
+    }
+  }
+}
+
+.controls {
+  display: none;
+  height: 100%;
+  width: 300px;
+  margin-left: 50px;
+  padding: 20px;
+  background: $grey;
+
+  &>* {
+    width: 100%;
+    background: $light_grey;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  #state {
+    height: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+
+  #car-info {
+    div {
+      padding: 5px;
+      margin-bottom: 10px;
+      color: white;
+      background: $dark_grey;
+    }
+
+    div:last-of-type {
+      margin: 0;
+    }
+  }
+
+  #game-speed {
+    #game-speed-label {
+      display: block;
+      color: white;
+      background: $dark_grey;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    #game-speed-input {
+      width: 100%;
+    }
+  }
+
+  #helpers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 40px);
+    grid-gap: 10px;
+  }
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  background: $grey;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 20px;
+  background: $dark_grey;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 10px;
+  height: 20px;
+  background: $dark_grey;
+  cursor: pointer;
+}
