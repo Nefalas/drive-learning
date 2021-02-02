@@ -9,6 +9,23 @@ import BoxMaps from './BoxMaps';
 
 const UNITS_BY_LENGTH = 16;
 
+function loadImage(source) {
+    let image = new Image();
+    image.src = source;
+
+    return image;
+}
+
+const images = {
+	background: loadImage(BackgroundImg),
+	cornerRight: loadImage(CornerRoad_right),
+	cornerLeft: loadImage(CornerRoad_left),
+	cornerUpRight: loadImage(CornerRoad_up_right),
+	cornerUpLeft: loadImage(CornerRoad_up_left),
+	straightHorizontal: loadImage(StraightRoad_h),
+	straightVertical: loadImage(StraightRoad_v)
+};
+
 export default class Box {
 
 	constructor(type, direction, row, col, game) {
@@ -24,10 +41,7 @@ export default class Box {
 		this.units = JSON.parse(JSON.stringify(BoxMaps.empty));
 		this.activeUnits = JSON.parse(JSON.stringify(BoxMaps.empty));
 
-		this.loadBackgroundImage();
-		this.loadRoadImage();
-
-		this.loadBackgroundImage = this.loadBackgroundImage.bind(this);
+		this.setRoadImageAndUnits();
 	}
 
 	incrementUnitByPosition(x, y) {
@@ -58,7 +72,7 @@ export default class Box {
 	setTypeAndDirection(type, direction) {
 		this.type = type;
 		this.direction = direction;
-		this.loadRoadImage();
+		this.setRoadImageAndUnits();
 	}
 
 	resetTypeAndDirection() {
@@ -88,7 +102,7 @@ export default class Box {
 		if (this.roadImage) {
 			this.game.ctx.drawImage(this.roadImage,	this.x, this.y,	this.game.boxSize, this.game.boxSize);
 		} else {
-			this.game.ctx.drawImage(this.backgroundImage,	this.x, this.y,	this.game.boxSize, this.game.boxSize);
+			this.game.ctx.drawImage(images.background,	this.x, this.y,	this.game.boxSize, this.game.boxSize);
 		}
 
 		if (this.game.gridOn) {
@@ -153,23 +167,16 @@ export default class Box {
 		this.game.ctx.fill();
 	}
 
-	loadBackgroundImage() {
-		let image = new Image();
-		image.src = BackgroundImg;
-		this.backgroundImage = image;
-	}
-
-	loadRoadImage() {
-		let image = new Image();
+	setRoadImageAndUnits() {
 		if (this.type === 'straight') {
 			switch (this.direction) {
 				case 'right':
 				case 'left':
-					image.src = StraightRoad_h;
+					this.roadImage = images.straightHorizontal;
 					this.units = BoxMaps.StraightRoad_h;
 					break;
 				case 'up':
-					image.src = StraightRoad_v;
+					this.roadImage = images.straightVertical;
 					this.units = BoxMaps.StraightRoad_v;
 					break;
 				default:
@@ -178,28 +185,25 @@ export default class Box {
 		} else if (this.type === 'corner') {
 			switch (this.direction) {
 				case 'left':
-					image.src = CornerRoad_left;
+					this.roadImage = images.cornerLeft;
 					this.units = BoxMaps.CornerRoad_left;
 					break;
 				case 'right':
-					image.src = CornerRoad_right;
+					this.roadImage = images.cornerRight;
 					this.units = BoxMaps.CornerRoad_right;
 					break;
 				case 'up_left':
-					image.src = CornerRoad_up_left;
+					this.roadImage = images.cornerUpLeft;
 					this.units = BoxMaps.CornerRoad_up_left;
 					break;
 				case 'up_right':
-					image.src = CornerRoad_up_right;
+					this.roadImage = images.cornerUpRight;
 					this.units = BoxMaps.CornerRoad_up_right;
 					break;
 				default:
 					return;
 			}
-		} else {
-			return;
 		}
-		this.roadImage = image;
 	}
 
 }
